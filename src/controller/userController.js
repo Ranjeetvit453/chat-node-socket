@@ -48,7 +48,7 @@ module.exports = class UserController{
 
     static async getSingleChatMessage(req,res,next){
         try{
-            const chatMesage = await chat.find(req.body).limit(5);
+            const chatMesage = await chat.find().sort({createAt:-1}).limit(5);
            let sendRes;
            if(chatMesage.length>0){
             sendRes = {
