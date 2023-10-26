@@ -47,8 +47,19 @@ module.exports = class UserController{
     }
 
     static async getSingleChatMessage(req,res,next){
+        const messageData = {
+            
+                receiver_id:"65054ce93138c4799009d7c7",
+                sender_id:"650d3d04f35942665156d200"
+            
+        }
         try{
-            const chatMesage = await chat.find().sort({createAt:-1}).limit(5);
+            const chatMesage = await chat.find({
+                $or: [
+                    { sender_id: req.body.sender_id, receiver_id: req.body.receiver_id },
+                    { sender_id: req.body.receiver_id, receiver_id: req.body.sender_id }
+                  ]
+            }).sort({createAt:-1}).limit(5);
            let sendRes;
            if(chatMesage.length>0){
             sendRes = {
@@ -59,7 +70,7 @@ module.exports = class UserController{
            }else{
             sendRes = {
               status:500,
-              message:"some technocal problem"
+              message:"data not found"
             }
         }
             res.send(sendRes)
