@@ -3,6 +3,7 @@ const UserController = require("../controller/userController");
 const UserValidation = require("../validation/userValidation");
 const Utils = require("../Utils/utils");
 const ErrorHandler = require("../globalMiddleware/errorHandle")
+const upload = require("../Utils/imagesUpload")
  
 
  class UserRouter{
@@ -50,6 +51,8 @@ const ErrorHandler = require("../globalMiddleware/errorHandle")
     UserValidation.register(),
     ErrorHandler.handelError,
    UserController.register)
+
+   this.router.post("/chat-file",upload.single('file'),UserController.chatFileUploaded)
 
  
   }
