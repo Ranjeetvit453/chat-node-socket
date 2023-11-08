@@ -2,7 +2,6 @@ const express = require("express");
 const UserRouter = require("./router/userRouter");
 const mongoose = require('mongoose');
 const cors = require('cors');
-
 class Server{
     app = express();
 
@@ -37,6 +36,7 @@ class Server{
       // }
   
       this.app.use(cors(corsOptions))
+   
     }
 
      setBodyPareser(){

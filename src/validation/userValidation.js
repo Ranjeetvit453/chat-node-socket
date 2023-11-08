@@ -51,8 +51,7 @@ module.exports = class UserValidation{
               throw new Error("user id not  Exit");
             }
           })
-         }),
-         body('message','message is required').notEmpty()
+         })
       ]
     }
 

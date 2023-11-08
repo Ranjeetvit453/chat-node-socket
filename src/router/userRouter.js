@@ -21,7 +21,7 @@ const upload = require("../Utils/imagesUpload")
   getRouter(){
  
     this.router.get("/user-list/:pages/:userId",
-   // Utils.verifyToken,
+    Utils.verifyToken,
     UserController.userList)
   }
 
@@ -52,7 +52,9 @@ const upload = require("../Utils/imagesUpload")
     ErrorHandler.handelError,
    UserController.register)
 
-   this.router.post("/chat-file",upload.single('file'),UserController.chatFileUploaded)
+   this.router.post("/chat-file",
+   upload.single('file'),
+   UserController.chatFileUploaded)
 
  
   }

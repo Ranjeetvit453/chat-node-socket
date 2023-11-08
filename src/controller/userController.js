@@ -16,19 +16,14 @@ module.exports = class UserController{
                 api_key: '219797798643958', 
                 api_secret: '0INxv9t6i9Kb5PL7EU9kDTTeWck' 
               });
-              
-             const fileName = "chat-images/"+req.file?.filename;
-             console.log("file name",fileName)
-             const fileUrl =await cloudinary.url(req.file?.filename)
 
-           console.log(" fille url ",fileUrl)
-            //  cloudinary.v2.uploader.upload(req.file.filename,
-            //     {upload_preset: "tdofujdr "},
-            //     (error, result)=>{
-            //         console.log(result, error);
-            //       });
-            
-
+           const url = await cloudinary.uploader.upload(req.file?.path)
+           const sendRes = {
+            status:200,
+            data:url?.secure_url,
+            message:"images uploaded successfully "
+          }
+              res.send(sendRes)
         }catch(err){
             next(err);
         }
@@ -87,7 +82,7 @@ module.exports = class UserController{
                     { sender_id: req.body.sender_id, receiver_id: req.body.receiver_id },
                     { sender_id: req.body.receiver_id, receiver_id: req.body.sender_id }
                   ]
-            }).limit(10).skip(((page - 1) * 10) * page)
+            }).limit(10).skip(((page - 1) * 10) * page).sort({createdAt:-1});
             console.log("chatMesage ",chatMesage)
            let sendRes;
            if(chatMesage.length>0){
